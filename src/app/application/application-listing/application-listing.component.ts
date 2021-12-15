@@ -26,6 +26,8 @@ public barChartData = [
   }
 
   getApplicationList(){
+    this.barChartData[0].data = [];
+    this.barChartLabel = [] ;
     this.service.getApplicationList().subscribe(res=>{
       console.log("res", res);
       if(res && res.data){
