@@ -17,8 +17,8 @@
             <td>{{ formatDate(app.outage_start_time)}}</td>
             <td>{{ formatDate(app.outage_end_time) || '--'}}</td>
             <td>
-                <button type="button" class="btn btn-success" (click)="changeOutageStatus(app)">Start Outage</button>
-                <button type="button" class="btn btn-danger" (click)="changeOutageStatus(app)">Stop Outage</button>
+                <button type="button" class="btn btn-success" (click)="changeOutageStatus(app,'start')">Start Outage</button>
+                <button type="button" class="btn btn-danger" (click)="changeOutageStatus(app,'stop')">Stop Outage</button>
             </td>
           </tr>
         </tbody>

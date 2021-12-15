@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApplicationService } from '../application.service';
 import * as moment from 'moment';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-application-listing',
@@ -19,7 +20,8 @@ public barChartData = [
       hoverBackgroundColor: '#4472c4'},
   ];
 
-  constructor( private service: ApplicationService) { }
+  constructor( private service: ApplicationService,
+    private notification: ToastrService) { }
 
   ngOnInit(): void {
     this.getApplicationList();
@@ -42,7 +44,7 @@ public barChartData = [
         // this.barChartLabel = this.applicationList.map(app=> app.application_name);
       }
     }, err=>{
-      console.log("error", err);
+      this.notification.error(err.message,'Error');
     })
   }
 
@@ -57,7 +59,16 @@ public barChartData = [
     return 'BOT' + Math.floor(Math.random() * (9 - 1 + 1)) + 1;
   };
 
-  changeOutageStatus(data: any){
+  changeOutageStatus(data: any, action:string){
+
+    if(action =='stop' && !data.status){
+      this.notification.warning('Please start the outage first','warning');
+      return ;
+    }else if(action =='start' && data.status){
+      this.notification.warning('Please stop the outage first', 'Warning');
+      return;
+    }
+
     const reqBody = {
       "date": new Date().toISOString(),
       "request_id": data._id,
@@ -67,10 +78,11 @@ public barChartData = [
 
      this.service.updateOutageStatus(reqBody).subscribe(res=>{
        console.log("updated successfully");
+       this.notification.success(res.message, 'Success');
        this.getApplicationList();
 
      }, err=>{
-       console.log("error", err);
+       this.notification.error(err.message,'Error');
      })
   }
 
