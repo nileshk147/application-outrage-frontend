@@ -1,0 +1,21 @@
+<div>
+  <div style="display: block;" class="chart-container">
+    <h3>Count of Application Name</h3>
+    <canvas baseChart 
+      [datasets]="barChartData"
+      [labels]="barChartLabels"
+      [options]="barChartOptions"
+      [plugins]="barChartPlugins"
+      [legend]="barChartLegend"
+      [chartType]="barChartType"
+      width="500"
+      height="500">
+    </canvas>
+    <select aria-label="Default select example" (change)="filterGraph($event)">
+      <option selected disabled value=''>Application Name</option>
+      <option *ngFor="let app of allLabel" value="{{app}}">{{app}}</option>
+      <!-- <option value="2">Two</option>
+      <option value="3">Three</option> -->
+    </select>
+  </div>
+</div>

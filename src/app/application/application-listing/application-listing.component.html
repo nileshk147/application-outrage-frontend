@@ -1,0 +1,28 @@
+<div class="container mt-lg-5">
+    <table class="table table-bordered application-table">
+        <thead class="thead-dark">
+          <tr class="table_header">
+            <th scope="col">Received From</th>
+            <th scope="col">Application Name</th>
+            <th scope="col">Outage Start</th>
+            <th scope="col">Outage Stop</th>
+            <th scope="col"> Actions </th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let app of applicationList; let i = index">
+            <td>{{ app?.recieved_from?.user_name || '--' }}</td>
+            <td>{{ app.application_name}}</td>
+            <td>{{ formatDate(app.outage_start_time)}}</td>
+            <td>{{ formatDate(app.outage_end_time) || '--'}}</td>
+            <td>
+                <button type="button" class="btn btn-success" (click)="changeOutageStatus(app)">Start Outage</button>
+                <button type="button" class="btn btn-danger" (click)="changeOutageStatus(app)">Stop Outage</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <app-application-graph [barChartLabels]="barChartLabel" [barChartData]="barChartData" (filterGraphData)="filterGraph($event)"></app-application-graph>
+</div>
